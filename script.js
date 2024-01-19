@@ -138,9 +138,21 @@ function checkbox() {
 
   checkboxes.forEach(function (checkbox) {
     checkbox.addEventListener("click", function () {
-      checkbox.classList.add("checked");
+      checkbox.classList.toggle("checked");
       const listItem = checkbox.parentNode.querySelector("li"); // Find the associated list item
-      listItem.classList.add("checked");
+      listItem.classList.toggle("checked");
+
+      // Update the completed state in local storage
+      const task = listItem.textContent;
+      const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+      const updatedTodos = storedTodos.map((todo) => {
+        if (todo.task === task) {
+          todo.completed = !todo.completed;
+        }
+        return todo;
+      });
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+
       updateCount();
       clearCompleted();
     });
@@ -235,7 +247,7 @@ function addTask() {
 
   // Update local storage with the new todo
   const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
-  const newTodo = { task: task };
+  const newTodo = { task: task , completed: false  };
   storedTodos.push(newTodo);
   localStorage.setItem("todos", JSON.stringify(storedTodos));
 
