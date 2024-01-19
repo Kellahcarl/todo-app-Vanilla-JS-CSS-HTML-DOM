@@ -247,7 +247,7 @@ function addTask() {
 
   // Update local storage with the new todo
   const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
-  const newTodo = { task: task , completed: false  };
+  const newTodo = { task: task, completed: false };
   storedTodos.push(newTodo);
   localStorage.setItem("todos", JSON.stringify(storedTodos));
 
